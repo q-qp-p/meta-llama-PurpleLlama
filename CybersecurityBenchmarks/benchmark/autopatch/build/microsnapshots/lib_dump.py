@@ -461,10 +461,12 @@ def find_noisy_fields(
         dump2 = dump2[desc_key]
         assert len(dump1) == len(dump2)
         for i in range(len(dump1)):
+            # pyrefly: ignore [bad-index]
             for path, v1, _v2 in recursive_compare_dicts(dump1[i], dump2[i]):
                 # v1 might be None if the key wasn't present in dump1, but present in dump2
                 # we'll try to resolve the field name from the root where it was present
                 root = dump1 if v1 else dump2
+                # pyrefly: ignore [bad-index]
                 tup = find_struct_field_for_path(root[i], path)
                 if tup:
                     out_struct_to_fields.setdefault(tup[0], set()).add(tup[1])
